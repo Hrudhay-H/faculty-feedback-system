@@ -3,6 +3,12 @@ const env = require('../config/env');
 const errorMiddleware = (err, req, res, next) => {
   err.statusCode = err.statusCode || 500;
 
+  // Always log the underlying error server-side, even though 500 responses
+  // hide details from the client in production.
+  if (err.statusCode >= 500) {
+    console.error(`❌ [${req.method} ${req.originalUrl}]`, err);
+  }
+
   // In production, suppress internal error details for 500s
   const isProduction = env.NODE_ENV === 'production';
   const message =
