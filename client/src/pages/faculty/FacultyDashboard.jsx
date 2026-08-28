@@ -4,7 +4,7 @@ import {
   RadialBarChart, RadialBar, PolarAngleAxis, ResponsiveContainer,
   BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Cell
 } from 'recharts';
-import FacultyLayout from '../../components/Layout/FacultyLayout';
+import FacultyLayout from '../../components/layout/FacultyLayout';
 import facultyService from '../../services/facultyService';
 import { PageSpinner, ErrorAlert, EmptyState } from '../../components/ui';
 

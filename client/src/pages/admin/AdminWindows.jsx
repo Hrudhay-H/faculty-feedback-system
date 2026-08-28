@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import AdminLayout from '../../components/Layout/AdminLayout';
+import AdminLayout from '../../components/layout/AdminLayout';
 import adminService from '../../services/adminService';
 
 function AdminWindows() {

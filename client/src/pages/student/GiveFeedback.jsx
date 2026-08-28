@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import StudentLayout from '../../components/Layout/StudentLayout';
+import StudentLayout from '../../components/layout/StudentLayout';
 import studentFeedbackService from '../../services/studentFeedbackService';
 import { PageSpinner, ErrorAlert } from '../../components/ui';
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import StudentLayout from '../../components/Layout/StudentLayout';
+import StudentLayout from '../../components/layout/StudentLayout';
 import studentFeedbackService from '../../services/studentFeedbackService';
 import { PageSpinner, ErrorAlert, EmptyState } from '../../components/ui';
 

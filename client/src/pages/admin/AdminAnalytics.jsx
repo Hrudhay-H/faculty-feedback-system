@@ -4,7 +4,7 @@ import {
   LineChart, Line, Legend, ResponsiveContainer,
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis
 } from 'recharts';
-import AdminLayout from '../../components/Layout/AdminLayout';
+import AdminLayout from '../../components/layout/AdminLayout';
 import adminService from '../../services/adminService';
 
 // ─── Design tokens ───────────────────────────────────────────────────────────

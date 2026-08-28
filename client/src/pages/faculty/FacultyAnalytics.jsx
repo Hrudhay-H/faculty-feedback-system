@@ -5,7 +5,7 @@ import {
   RadarChart, Radar, PolarGrid, PolarAngleAxis, PolarRadiusAxis,
   LineChart, Line, Legend
 } from 'recharts';
-import FacultyLayout from '../../components/Layout/FacultyLayout';
+import FacultyLayout from '../../components/layout/FacultyLayout';
 import facultyService from '../../services/facultyService';
 import { PageSpinner, ErrorAlert } from '../../components/ui';
 
