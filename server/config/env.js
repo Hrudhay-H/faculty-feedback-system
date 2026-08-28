@@ -23,8 +23,14 @@ const envSchema = zod.object({
     .refine((val) => !val.includes('<YOUR_RANDOM_JWT_SECRET>') && val !== 'placeholder' && val.length >= 8, {
       message: 'JWT_SECRET must be a secure random string (at least 8 characters) and not contain placeholders'
     }),
-  JWT_EXPIRES_IN: zod.string().default('24h'),
-  CORS_ORIGIN: zod.string().default('http://localhost:5173'),
+  JWT_EXPIRES_IN: zod.preprocess(
+    (val) => (val === '' || val === undefined ? undefined : val),
+    zod.string().default('24h')
+  ),
+  CORS_ORIGIN: zod.preprocess(
+    (val) => (val === '' || val === undefined ? undefined : val),
+    zod.string().default('http://localhost:5173')
+  ),
 });
 
 const envParse = envSchema.safeParse(process.env);
