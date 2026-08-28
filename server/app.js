@@ -17,6 +17,9 @@ const facultyRoutes = require('./routes/facultyRoutes');
 
 const app = express();
 
+// Trust proxy (required for express-rate-limit on Vercel/behind reverse proxies)
+app.set('trust proxy', 1);
+
 // 1. Security HTTP Headers
 app.use(helmet());
 
