@@ -21,9 +21,23 @@ const app = express();
 app.use(helmet());
 
 // 2. CORS Configuration
+// CORS_ORIGIN supports a single URL or comma-separated list of URLs
+// e.g. "http://localhost:5173,https://your-app.vercel.app"
+const allowedOrigins = env.CORS_ORIGIN
+  .split(',')
+  .map((o) => o.trim())
+  .filter(Boolean);
+
 app.use(
   cors({
-    origin: env.CORS_ORIGIN,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (e.g. mobile apps, curl, Postman)
+      if (!origin) return callback(null, true);
+      if (allowedOrigins.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(new Error(`CORS: Origin '${origin}' is not allowed`), false);
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true
