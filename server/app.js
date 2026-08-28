@@ -21,28 +21,38 @@ const app = express();
 app.use(helmet());
 
 // 2. CORS Configuration
-// CORS_ORIGIN supports a single URL or comma-separated list of URLs
-// e.g. "http://localhost:5173,https://your-app.vercel.app"
-const allowedOrigins = env.CORS_ORIGIN
-  .split(',')
-  .map((o) => o.trim())
-  .filter(Boolean);
-
+// Dynamically allow requests from localhost or Vercel deployments
 app.use(
   cors({
     origin: (origin, callback) => {
-      // Allow requests with no origin (e.g. mobile apps, curl, Postman)
+      // Allow requests with no origin (like mobile apps or curl)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
+
+      // Parse custom origins from env
+      const allowedOrigins = (env.CORS_ORIGIN || '')
+        .split(',')
+        .map((o) => o.trim())
+        .filter(Boolean);
+
+      const isAllowed = 
+        allowedOrigins.includes(origin) ||
+        origin.startsWith('http://localhost:') ||
+        origin.endsWith('.vercel.app');
+
+      if (isAllowed) {
         return callback(null, true);
       }
       return callback(new Error(`CORS: Origin '${origin}' is not allowed`), false);
     },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
+    credentials: true,
+    optionsSuccessStatus: 200 // Some legacy browsers choke on 204
   })
 );
+
+// Explicitly handle OPTIONS preflight requests globally
+app.options('*', cors());
 
 // 3. General API Rate Limiter (100 requests per 15 minutes)
 const apiLimiter = rateLimit({
